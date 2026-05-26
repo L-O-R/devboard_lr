@@ -1,13 +1,16 @@
 from rest_framework.permissions import BasePermission
 from apps.projects.models import ProjectMembership
 
-class ISTaskProjectMember(BasePermission):
+class IsTaskProjectMember(BasePermission):
     message = "You are not a memeber of this project"
 
     def has_permission(self, request, view):
         project_id = view.kwargs.get('project_id')
+        print("----------------------------------------------------------------")
+        print(request.user)
         return ProjectMembership.objects.filter(
-            user_id = request.user_id,
+            
+            user = request.user,
             project_id = project_id
         ).exists()
     

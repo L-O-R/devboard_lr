@@ -57,7 +57,7 @@ class SprintSerializer(serializers.ModelSerializer):
             )
         return data
     
-class AddProjectMemberSerializer(serializers.Serializer):
+class AddProjectMemberSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(write_only = True)
 
     class Meta:

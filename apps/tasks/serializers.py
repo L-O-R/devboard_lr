@@ -26,7 +26,7 @@ class TaskSerializer(serializers.ModelSerializer):
         required=False,
         allow_null=True
     )
-
+    
     label_ids = serializers.PrimaryKeyRelatedField(
         queryset=Label.objects.none(),
         source='labels',
@@ -51,7 +51,7 @@ class TaskSerializer(serializers.ModelSerializer):
             'assigned_to', 'assigned_to_id',
             'created_by', 'status', 'priority',
             'labels', 'label_ids',
-            'due_date', 'order',
+            'due_data', 'order',
             'created_at', 'updated_at'
         ]
 

@@ -15,8 +15,7 @@ class IsProjectMember(BasePermission):
 
         return ProjectMembership.objects.filter(
             user = request.user,
-            project_id = project_id,
-            is_active = True
+            project_id = project_id
         ).exists()
 
 class IsProjectManager(BasePermission):

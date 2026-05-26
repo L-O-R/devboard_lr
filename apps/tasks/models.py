@@ -1,4 +1,4 @@
-from email.policy import default
+
 
 from django.db import models
 from django.conf import settings
@@ -35,7 +35,7 @@ class Task(models.Model):
         CRITICAL = 'critical', 'Critical'
     
     title = models.CharField(max_length = 255)
-    description = models.TextField(null = True, black= True)
+    description = models.TextField(null = True, blank= True)
     project = models.ForeignKey(
         Project,
         on_delete=models.CASCADE,
@@ -45,7 +45,7 @@ class Task(models.Model):
     sprint = models.ForeignKey(
         Sprint,
         on_delete=models.SET_NULL,
-        null=True, blacnk=True,
+        null=True, blank=True,
         related_name = 'tasks'
     )
 
@@ -63,15 +63,21 @@ class Task(models.Model):
         related_name = 'assigned_tasks'
     )
 
-    status = models.TextChoices(
-        max_length= 20,
-        choices = Status.choices,
+    status = models.CharField(
+        max_length=20,
+        choices=Status.choices,
         default=Status.BACKLOG
     )
-    priority = models.TextChoices(
-        max_length= 20,
-        choices = Priority.choices,
+    priority = models.CharField(
+        max_length=20,
+        choices=Priority.choices,
         default=Priority.MEDIUM
+    )
+
+    labels = models.ManyToManyField(
+        Label,
+        related_name='tasks',
+        blank=True
     )
 
     due_data = models.DateField(null= True, blank=True)

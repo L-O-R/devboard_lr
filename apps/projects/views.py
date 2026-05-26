@@ -1,10 +1,9 @@
-import stat
+
 from django.urls import is_valid_path
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
 
-from apps.accounts import serializers
 from .permissions import (
     isOrgMemberForProject,
     IsProjectManager,
@@ -12,7 +11,7 @@ from .permissions import (
 )
 
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, generics
 
 from .serializers import (
     ProjectMembershipSerializer,
