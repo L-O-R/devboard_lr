@@ -26,8 +26,7 @@ class IsProjectManager(BasePermission):
         return OrgMembership.objects.filter(
             user = request.user,
             organization_id = org_id,
-            role = OrgMembership.Role.PROJECT_MANAGER,
-            is_active = True
+            role = OrgMembership.Role.PROJECT_MANAGER
         ).exists() 
 
 

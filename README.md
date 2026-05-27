@@ -331,34 +331,7 @@ coverage report
 
 ---
 
-## Features to Add & Technical Fixes
 
-Here are some features to implement, along with bugs identified in the existing codebase that should be resolved:
-
-### Critical Technical Fixes
-
-1.  **RegisterVIEW Response Typo & Trailing Comma (`apps/accounts/views.py`)**:
-    *   **Bug 1**: `UserProfileSerializer.data` accesses the property on the class instead of an instance (`UserProfileSerializer(user).data`). This will crash during user signup.
-    *   **Bug 2**: There is a trailing comma `response = Response(...),` which packs the response variable as a Python `tuple`. As a result, `set_auth_cookie` will fail with an `AttributeError` when trying to execute `.set_cookie()`.
-    *   *Correction*:
-        ```python
-        response = Response({
-            'message': 'Registration Successful!',
-            'user': UserProfileSerializer(user).data
-        }, status=status.HTTP_201_CREATED)
-        ```
-
-2.  **InviteMemberSerializer Typo (`apps/organizations/serializers.py`)**:
-    *   **Bug**: The method is defined as `validate_emal` instead of `validate_email`. Because of this typo, email validation for membership invites is bypassed.
-    *   *Correction*: Rename `validate_emal` to `validate_email`.
-
-3.  **OrgMembershipSerializer Typo (`apps/organizations/serializers.py`)**:
-    *   **Bug**: `read_only_feilds` contains a typo and should be spelled `read_only_fields`.
-    *   *Correction*: Correct the spelling to `read_only_fields`.
-
-4.  **Project Membership Permission Check (`apps/projects/permissions.py`)**:
-    *   **Bug**: `IsProjectMember` checks `is_active=True` on `ProjectMembership`, but the `ProjectMembership` model does not define an `is_active` field.
-    *   *Correction*: Remove `is_active=True` from the filter query in `IsProjectMember.has_permission`.
 
 ### Backlog & Features to Add
 
@@ -366,7 +339,5 @@ Here are some features to implement, along with bugs identified in the existing 
     *   Track action histories such as "Member added to project", "Sprint status changed", or "Task assigned" to feed an activity board widget.
 2.  **Secure JWT / Double Token Auth**:
     *   Migrate authentication to a robust setup using JWT tokens (e.g., SimpleJWT) stored in HTTP-only cookies with CSRF token protection headers.
-3.  **API Documentation**:
-    *   Integrate Swagger (`drf-yasg` or `drf-spectacular`) to automatically generate clean, interactive REST API docs.
-4.  **Real-Time Notifications**:
+3.  **Real-Time Notifications**:
     *   Integrate `django-channels` and websockets to notify users when they are assigned tasks or invited to organizations.

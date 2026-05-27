@@ -1,0 +1,24 @@
+databases:
+  - name: devboard-db
+    databaseName: devboard_db
+    user: devboard_user
+    plan: free
+
+services:
+  - type: web
+    name: devboard-api
+    plan: free
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: gunicorn devboard_project.wsgi:application
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: devboard-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: "*"

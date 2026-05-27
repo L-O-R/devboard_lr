@@ -27,7 +27,7 @@ class OrgMembershipSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrgMembership
         fields = ['id', 'user', 'role', 'joined_at', 'is_active']
-        read_only_feilds = ['id', 'user', 'joined_at']
+        read_only_fields = ['id', 'user', 'joined_at']
 
 
 
@@ -42,7 +42,7 @@ class InviteMemberSerializer(serializers.ModelSerializer):
         default = OrgMembership.Role.DEVELOPER
     )
 
-    def validate_emal(self, value):
+    def validate_email(self, value):
         from apps.accounts.models import User
         if not User.objects.filter(email = value).exists():
             raise serializers.ValidationError(

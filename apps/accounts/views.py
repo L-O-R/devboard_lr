@@ -5,11 +5,12 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.conf import settings
 
+from apps.accounts.models import User
+
 
 from.serializers import (
     RegisterSerializer,
     LoginSerializer,
-    ChangePasswordSerializer,
     UserProfileSerializer
 )
 
@@ -40,8 +41,8 @@ class RegisterVIEW(APIView):
 
             response = Response({
                 'message': 'Registeration Successfull!',
-                'user': UserProfileSerializer.data
-            }, status = status.HTTP_201_CREATED),
+                'user': UserProfileSerializer(user).data
+            }, status = status.HTTP_201_CREATED)
 
             return set_auth_cookie(response, token.key)
         
